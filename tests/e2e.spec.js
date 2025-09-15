@@ -26,15 +26,15 @@ test('Успешный логин и проверка страницы това�
   const highPriceProduct = productsPage.products[0];
   await page
     .locator(
-      `[data-test="add-to-cart-${highPriceProduct.prefix}${highPriceProduct.name}"]`
-    )
-    .click();
+      `[data-test="add-to-cart-${highPriceProduct.prefix}${highPriceProduct.name}"]` // Интересный способ найти самый дорогой товар, вприципе имеет право быть, но сделай это лучше через UI, 
+    ) // получи значение из элемента и сравни в ассершене
+    .click(); 
   //Перейти в корзину.
   productsPage.openCart();
   //Проверить, что в корзине находится именно тот товар, который вы добавили
   await expect(
     page.locator(
-      "//div[@class='cart_list']/div[@class='cart_item'][1]/div[@class='cart_item_label']/a/div[@class='inventory_item_name']"
+      "//div[@class='cart_list']/div[@class='cart_item'][1]/div[@class='cart_item_label']/a/div[@class='inventory_item_name']" // Этого не должно быть в тестах
     )
   ).toContainText(highPriceProduct.title);
   //Начать оформление заказа (нажать "Checkout")
